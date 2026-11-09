@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Дія ферментів слини на крохмаль</title>
+<style>
+:root{--bg:#f4f8ff;--card:#fff;--ink:#14213d;--mut:#3b4a6b;--pri:#1d4ed8;--pri-t:#fff;--ok:#0f7a3d;--okbg:#dcf5e5;--bad:#b3261e;--badbg:#fde4e2;--acc:#b45309;--accbg:#fff1d6;--line:#c7d4ee;--blue:#1b2a8f;--clear:#f3e3a0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0e1530;--card:#18224a;--ink:#f5f7ff;--mut:#c5d0f2;--pri:#7fb0ff;--pri-t:#0b1230;--ok:#7be0a4;--okbg:#103a25;--bad:#ff9a92;--badbg:#4a1815;--acc:#ffc861;--accbg:#46330c;--line:#3a4a86;--blue:#5a6cff;--clear:#e9d88a}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0e1530;--card:#18224a;--ink:#f5f7ff;--mut:#c5d0f2;--pri:#7fb0ff;--pri-t:#0b1230;--ok:#7be0a4;--okbg:#103a25;--bad:#ff9a92;--badbg:#4a1815;--acc:#ffc861;--accbg:#46330c;--line:#3a4a86;--blue:#5a6cff;--clear:#e9d88a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.55 "Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:16px}
+header{background:linear-gradient(135deg,#1d4ed8,#7c3aed);color:#fff;border-radius:18px;padding:22px}
+header h1{margin:0 0 6px;font-size:1.6rem;line-height:1.25}
+header p{margin:0;font-size:1rem}
+.badge{display:inline-block;background:#fde68a;color:#3d2a00;font-weight:700;border-radius:99px;padding:2px 12px;font-size:.85rem;margin-bottom:8px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+nav button{flex:1 1 auto;border:2px solid var(--pri);background:var(--card);color:var(--ink);border-radius:12px;padding:10px 12px;font:inherit;font-weight:700;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--pri);color:var(--pri-t)}
+section{display:none;background:var(--card);border:2px solid var(--line);border-radius:18px;padding:18px}
+section.on{display:block}
+h2{margin:0 0 10px;font-size:1.3rem}
+.box{border-left:6px solid var(--acc);background:var(--accbg);padding:10px 14px;border-radius:10px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.item{border:2px solid var(--line);border-radius:12px;padding:10px 12px;font-weight:600}
+.step{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;cursor:pointer}
+.step input{width:24px;height:24px;margin-top:3px;accent-color:var(--pri)}
+.step.done{background:var(--okbg);border-color:var(--ok)}
+.bar{height:14px;background:var(--line);border-radius:9px;overflow:hidden;margin:10px 0}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.tubes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.tb{border:3px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);padding:10px;font:inherit;cursor:pointer;text-align:center}
+.tb[aria-pressed="true"]{border-color:var(--pri);box-shadow:0 0 0 3px var(--pri)}
+.tb b{display:block;font-size:.95rem}
+.tb small{color:var(--mut);font-size:.82rem;display:block}
+.tube{width:46px;height:96px;margin:6px auto;border:3px solid var(--ink);border-radius:4px 4px 24px 24px;background:linear-gradient(var(--card) 20%,var(--liq,#f3e3a0) 20%);transition:.6s}
+.go{background:var(--pri);color:var(--pri-t);border:0;border-radius:12px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer;margin:4px 6px 4px 0}
+.go.sec{background:var(--accbg);color:var(--ink);border:2px solid var(--acc)}
+.res{border-radius:12px;padding:12px 14px;margin-top:10px;font-weight:600;min-height:3em}
+.res.ok{background:var(--okbg);border:2px solid var(--ok)}
+.res.no{background:var(--badbg);border:2px solid var(--bad)}
+.q{margin:14px 0}
+.opt{display:block;width:100%;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px 12px;margin:6px 0;font:inherit;cursor:pointer}
+.opt.right{background:var(--okbg);border-color:var(--ok)}
+.opt.wrong{background:var(--badbg);border-color:var(--bad)}
+.fb{font-weight:600;margin:4px 0}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{border:2px solid var(--line);padding:8px;text-align:left}
+td:empty{height:3em;min-width:140px}
+th{background:var(--pri);color:var(--pri-t)}
+.wide{overflow-x:auto}
+button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<span class="badge">Біологія · 8 клас</span>
+<h1>Дослідницький практикум: дія ферментів слини на крохмаль</h1>
+<p>Дізнайся, як амілаза слини розщеплює крохмаль, і перевір, що впливає на її роботу.</p>
+</header>
+
+<nav role="tablist" id="tabs">
+<button role="tab" aria-selected="true" data-t="a">1. Теорія</button>
+<button role="tab" aria-selected="false" data-t="b">2. Хід роботи</button>
+<button role="tab" aria-selected="false" data-t="c">3. Дослід</button>
+<button role="tab" aria-selected="false" data-t="d">4. Перевір себе</button>
+</nav>
+
+<section id="a" class="on">
+<h2>Що потрібно знати</h2>
+<p><b>Крохмаль</b> — складний вуглевод (полісахарид), запасна речовина рослин. Він міститься в хлібі, картоплі, крупах.</p>
+<p><b>Ферменти</b> — білки-біокаталізатори, які прискорюють хімічні реакції. Кожен фермент діє на певну речовину.</p>
+<p>У слині є фермент <b>амілаза</b> (птіалін). Вона розщеплює крохмаль до дисахариду <b>мальтози</b>. Тому, якщо довго жувати хліб, він починає здаватися солодкуватим.</p>
+<div class="box"><b>Якісна реакція на крохмаль:</b> розчин йоду (йодна настоянка, розчин Люголя) забарвлює крохмаль у <b style="color:var(--blue)">синьо-фіолетовий</b> колір. Якщо крохмалю немає, колір залишається жовтувато-коричневим.</div>
+<div class="box"><b>Умови роботи ферментів:</b> оптимальна температура — близько <b>37 °C</b>; під дією кип’ятіння білок руйнується (денатурація); на холоді реакція майже припиняється; кисле середовище шкодить амілазі слини.</div>
+<p><b>Гіпотеза:</b> якщо до крохмалю додати слину при 37 °C, то синього забарвлення з йодом не буде, бо крохмаль розщепиться.</p>
+</section>
+
+<section id="b">
+<h2>Хід роботи (познач виконані кроки)</h2>
+<div class="bar"><i id="pb"></i></div>
+<p id="pt" style="font-weight:700">Виконано: 0 з 6</p>
+<h3>Обладнання</h3>
+<div class="grid">
+<div class="item">🧪 5 пробірок і штатив</div>
+<div class="item">🥣 1% розчин крохмального клейстеру</div>
+<div class="item">💧 Слина, розведена водою (1:2)</div>
+<div class="item">🟤 Розчин йоду</div>
+<div class="item">♨️ Водяна баня 37 °C</div>
+<div class="item">🧊 Лід, гаряча вода</div>
+</div>
+<div id="steps"></div>
+<div class="box"><b>Безпека:</b> йод не потрапляє в очі та рот; з гарячою водою працюй обережно; не пробуй реактиви на смак.</div>
+</section>
+
+<section id="c">
+<h2>Віртуальний дослід</h2>
+<p>Обери пробірку, потім натисни «Додати йод» і побач результат.</p>
+<div class="tubes" id="tubes"></div>
+<button class="go" id="iod">🟤 Додати йод</button>
+<button class="go sec" id="rst">↺ Скинути</button>
+<div class="res no" id="out" aria-live="polite">Спершу обери пробірку.</div>
+<h3>Підсумкова таблиця</h3>
+<div class="wide"><table>
+<tr><th>№</th><th>Умови</th><th>Колір з йодом</th><th>Висновок</th></tr>
+<tr><td>1</td><td>Крохмаль + вода</td><td>Синій</td><td></td></tr>
+<tr><td>2</td><td>Крохмаль + слина, 37 °C</td><td>Жовто-коричневий</td><td></td></tr>
+<tr><td>3</td><td>Крохмаль + кип’ячена слина</td><td>Синій</td><td></td></tr>
+<tr><td>4</td><td>Крохмаль + слина, лід</td><td>Синій</td><td></td></tr>
+<tr><td>5</td><td>Крохмаль + слина + кислота</td><td>Синій</td><td></td></tr>
+</table></div>
+</section>
+
+<section id="d">
+<h2>Перевір себе</h2>
+<div id="quiz"></div>
+<p class="fb" id="score"></p>
+</section>
+</div>
+
+<script>
+var $=function(s){return document.querySelector(s)};
+document.querySelectorAll("#tabs button").forEach(function(b){b.onclick=function(){
+document.querySelectorAll("#tabs button").forEach(function(x){x.setAttribute("aria-selected",x===b)});
+document.querySelectorAll("section").forEach(function(s){s.classList.toggle("on",s.id===b.dataset.t)})}});
+
+var steps=["Налий у кожну з 5 пробірок по 2 мл розчину крохмалю й пронумеруй їх.",
+"У пробірку 1 додай 1 мл води, у 2 — 1 мл слини, у 3 — 1 мл кип’яченої та охолодженої слини.",
+"У пробірку 4 додай 1 мл слини й постав її в склянку з льодом. У пробірку 5 додай слину й 2 краплі слабкої кислоти (оцет).",
+"Пробірки 1, 2, 3 і 5 постав на водяну баню при 37 °C, а пробірку 4 залиш у льоді на 10–15 хв.",
+"Після витримування додай у кожну пробірку по 2–3 краплі розчину йоду та струсни.",
+"Запиши колір у кожній пробірці й зроби висновок."];
+var sh="";steps.forEach(function(t,i){sh+='<label class="step"><input type="checkbox"><span><b>Крок '+(i+1)+'.</b> '+t+'</span></label>'});
+$("#steps").innerHTML=sh;
+$("#steps").addEventListener("change",function(){
+var all=document.querySelectorAll("#steps input"),n=0;
+all.forEach(function(c){c.closest(".step").classList.toggle("done",c.checked);if(c.checked)n++});
+$("#pb").style.width=(n/all.length*100)+"%";$("#pt").textContent="Виконано: "+n+" з "+all.length});
+
+var T=[{n:"Пробірка 1",d:"крохмаль + вода",blue:1,m:"Синє забарвлення: крохмаль присутній. Без ферменту він не розщепився (контроль)."},
+{n:"Пробірка 2",d:"крохмаль + слина, 37 °C",blue:0,m:"Колір не змінився на синій: амілаза слини розщепила крохмаль до мальтози."},
+{n:"Пробірка 3",d:"кип’ячена слина",blue:1,m:"Синє забарвлення: при кип’ятінні фермент (білок) денатурував і не працює."},
+{n:"Пробірка 4",d:"слина на льоду",blue:1,m:"Синє забарвлення: за низької температури фермент майже не діє."},
+{n:"Пробірка 5",d:"слина + кислота",blue:1,m:"Синє забарвлення: кисле середовище знижує активність амілази."}];
+var sel=-1,th="";
+T.forEach(function(t,i){th+='<button class="tb" aria-pressed="false" data-i="'+i+'"><b>'+t.n+'</b><div class="tube" id="tu'+i+'"></div><small>'+t.d+'</small></button>'});
+$("#tubes").innerHTML=th;
+document.querySelectorAll(".tb").forEach(function(b){b.onclick=function(){
+sel=+b.dataset.i;document.querySelectorAll(".tb").forEach(function(x){x.setAttribute("aria-pressed",x===b)});
+$("#out").className="res no";$("#out").textContent="Обрано: "+T[sel].n+" ("+T[sel].d+"). Натисни «Додати йод»."}});
+$("#iod").onclick=function(){
+if(sel<0){$("#out").textContent="Спершу обери пробірку.";return}
+var t=T[sel];$("#tu"+sel).style.setProperty("--liq",t.blue?"#1b2a8f":"#c9922e");
+$("#out").className="res "+(t.blue?"no":"ok");$("#out").textContent=t.m};
+$("#rst").onclick=function(){sel=-1;document.querySelectorAll(".tube").forEach(function(e){e.style.removeProperty("--liq")});
+document.querySelectorAll(".tb").forEach(function(x){x.setAttribute("aria-pressed","false")});
+$("#out").className="res no";$("#out").textContent="Спершу обери пробірку."};
+
+var Q=[{q:"Який фермент слини розщеплює крохмаль?",o:["Пепсин","Амілаза","Ліпаза"],a:1,e:"Амілаза (птіалін) розщеплює крохмаль до мальтози."},
+{q:"Яким реактивом виявляють крохмаль?",o:["Розчином йоду","Кислотою","Водою"],a:0,e:"Йод дає синьо-фіолетове забарвлення з крохмалем."},
+{q:"Чому в пробірці з кип’яченою слиною крохмаль не розщепився?",o:["Бракувало води","Фермент (білок) денатурував","Слина стала солодкою"],a:1,e:"Висока температура руйнує структуру білка-ферменту."},
+{q:"За якої температури амілаза працює найкраще?",o:["Близько 0 °C","Близько 37 °C","Близько 100 °C"],a:1,e:"37 °C — температура тіла людини, оптимальна для ферментів слини."}];
+var done=0,good=0,qh="";
+Q.forEach(function(x,i){qh+='<div class="q"><b>'+(i+1)+'. '+x.q+'</b>';
+x.o.forEach(function(o,j){qh+='<button class="opt" data-q="'+i+'" data-j="'+j+'">'+o+'</button>'});
+qh+='<div class="fb" id="f'+i+'"></div></div>'});
+$("#quiz").innerHTML=qh;
+document.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){
+var i=+b.dataset.q,j=+b.dataset.j,x=Q[i],bs=document.querySelectorAll('[data-q="'+i+'"]');
+if(bs[0].disabled)return;
+bs.forEach(function(e){e.disabled=true});
+bs[x.a].classList.add("right");
+if(j===x.a){good++;$("#f"+i).textContent="✅ Правильно! "+x.e}else{b.classList.add("wrong");$("#f"+i).textContent="❌ Ні. "+x.e}
+done++;if(done===Q.length)$("#score").textContent="Результат: "+good+" з "+Q.length+(good===Q.length?" — чудово! 🎉":" — повтори теорію й спробуй ще.")}});
+</script>
+</body>
+</html>
